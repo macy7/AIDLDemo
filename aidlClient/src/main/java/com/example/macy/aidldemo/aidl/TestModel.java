@@ -1,7 +1,11 @@
 package com.example.macy.aidldemo.aidl;
 
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
+
+import java.util.Objects;
 
 /**
  * @ProjectName: AIDLDemo
@@ -79,5 +83,22 @@ public class TestModel implements Parcelable {
                 "name='" + name + '\'' +
                 ", age=" + age +
                 '}';
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TestModel testModel = (TestModel) o;
+        return age == testModel.age &&
+                Objects.equals(name, testModel.name);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, age);
     }
 }

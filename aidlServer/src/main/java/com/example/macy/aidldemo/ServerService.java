@@ -26,64 +26,68 @@ import java.util.List;
  * @Version: 1.0
  */
 public class ServerService extends Service {
+    private final String TAG = "ServerService";
     private List<TestModel> testModels = new ArrayList<>();
     private TestManager.Stub testManager = new TestManager.Stub() {
         @Override
         public TestModel getTestModel() throws RemoteException {
             TestModel testModel = testModels.get(0);
-            Log.e("tag","AIDL: \n**********************************************************\n");
-            Log.e("tag", "AIDL: server getTestModel()\n " + testModel.toString());
+            Log.e(TAG, "AIDL: \n**********************************************************\n");
+            Log.e(TAG, "AIDL: server getTestModel()\n " + testModel.toString());
             return testModel;
         }
 
         @Override
         public List<TestModel> getModels() throws RemoteException {
-            Log.e("tag", "AIDL: server getModels()\n " + testModels.toString());
+            Log.e(TAG, "AIDL: server getModels()\n " + testModels.toString());
             return testModels;
         }
 
         @Override
         public TestModel addInTestModel(TestModel testModel) throws RemoteException {
-            Log.e("tag", "AIDL: server in:\n " + testModel.toString());
+            Log.e(TAG, "AIDL: server in:\n " + testModel.toString());
             if (testModel == null) {
-                Log.e("tag", "AIDL: server in:\n " + "addIn is null");
+                Log.e(TAG, "AIDL: server in:\n " + "addIn is null");
                 testModel = new TestModel();
             }
-            testModel.setAge(7777777);
+//            testModel.setName("Server--->Client");
+            testModel.setAge(-111);
             if (!testModels.contains(testModel)) {
                 testModels.add(testModel);
             }
-            Log.e("tag", "AIDL: server in:\n " + testModels.toString());
+            Log.e(TAG, "AIDL: server in:\n " + testModels.toString());
             return testModel;
         }
 
         @Override
         public TestModel addOutTestModel(TestModel testModel) throws RemoteException {
-            Log.e("tag", "AIDL: server out:\n " + testModel.toString());
+            Log.e(TAG, "AIDL: server out:\n " + testModel.toString());
             if (testModel == null) {
-                Log.e("tag", "AIDL: server out:\n " + "addOut is null");
+                Log.e(TAG, "AIDL: server out:\n " + "addOut is null");
                 testModel = new TestModel();
             }
-            testModel.setAge(7777777);
+//            testModel.setName("Server--->Client");
+            testModel.setAge(-222);
             if (!testModels.contains(testModel)) {
                 testModels.add(testModel);
             }
-            Log.e("tag", "AIDL: server out:\n " + testModels.toString());
+            Log.e(TAG, "AIDL: server out:\n " + testModels.toString());
             return testModel;
         }
 
         @Override
         public TestModel addInOutTestModel(TestModel testModel) throws RemoteException {
-            Log.e("tag", "AIDL: server inout:\n " + testModel.toString());
+            Log.e(TAG, "AIDL: server inout:\n " + testModel.toString());
             if (testModel == null) {
-                Log.e("tag", "AIDL: server inout:\n " + "addInOut is null");
+                Log.e(TAG, "AIDL: server inout:\n " + "addInOut is null");
                 testModel = new TestModel();
             }
-            testModel.setAge(7777777);
+//            testModel.setName("Server--->Client");
+            testModel.setAge(-333);
             if (!testModels.contains(testModel)) {
                 testModels.add(testModel);
             }
-            Log.e("tag", "AIDL: server inout:\n " + testModels.toString());
+            Log.e(TAG, "AIDL: server inout:\n " + testModels.toString());
             return testModel;
         }
     };
@@ -92,8 +96,8 @@ public class ServerService extends Service {
     public void onCreate() {
         super.onCreate();
         TestModel testModel = new TestModel();
-        testModel.setName("server");
-        testModel.setAge(28);
+        testModel.setName("ServerService");
+        testModel.setAge(777);
         testModels.add(testModel);
     }
 

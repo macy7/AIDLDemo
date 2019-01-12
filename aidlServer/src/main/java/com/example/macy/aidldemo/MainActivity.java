@@ -8,6 +8,7 @@ import android.os.RemoteException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.macy.aidldemo.aidl.TestManager;
 import com.example.macy.aidldemo.aidl.TestModel;
@@ -15,6 +16,8 @@ import com.example.macy.aidldemo.aidl.TestModel;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private final String TAG = "MainActivity";
 
     private TestManager testManager;
     private boolean isBind;
@@ -26,7 +29,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 TestModel testModel = testManager.getTestModel();
                 List<TestModel> testModels = testManager.getModels();
-                Log.e("tag", "AIDL: server->client MainActivity \ntestModel: " + testModel.toString()
+                tvMain.setText("服务绑定成功:\n" + "AIDL: server->client MainActivity \ntestModel: " + testModel.toString()
+                        + "\ntestModels: " + testModels.toString());
+                Log.e(TAG, "AIDL: server->client MainActivity \ntestModel: " + testModel.toString()
                         + "\ntestModels: " + testModels.toString());
                 addTestModel();
             } catch (RemoteException e) {
@@ -40,11 +45,14 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    TextView tvMain;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         bindService();
+        tvMain = findViewById(R.id.tvMain);
     }
 
     private void bindService() {
@@ -56,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private void addTestModel() {
         TestModel testModel = new TestModel();
         testModel.setName("client->server");
-        testModel.setAge(0);
+        testModel.setAge(28);
         if (isBind) {
             try {
                 testManager.addInTestModel(testModel);
